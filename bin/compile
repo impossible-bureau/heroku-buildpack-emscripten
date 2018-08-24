@@ -20,7 +20,9 @@ REPO=https://github.com/juj/emsdk.git
 echo "-----> Installing Emscripten"
 
 echo "Clonning Emscripten from the repo $REPO" | indent
-git clone -q $REPO $EMSDK_DIR
+if [ ! -d "$EMSDK_DIR" ]; then
+	git clone -q $REPO $EMSDK_DIR
+fi
 
 echo "Downloading latest SDK" | indent
 $EMSDK_DIR/emsdk install latest
