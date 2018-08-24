@@ -1,0 +1,36 @@
+#!/bin/sh
+# bin/compile BUILD_DIR CACHE_DIR ENV_DIR
+
+set -u # stop on unset variables
+set -e # stop on error
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+BUILD_DIR=${1:-}
+CACHE_DIR=${2:-}
+ENV_DIR=${3:-}
+BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
+
+EMSDK_DIR=$CACHE_DIR/emsdk
+
+REPO=https://github.com/juj/emsdk.git
+
+echo "-----> Installing Emscripten"
+
+echo "Clonning Emscripten from the repo $REPO" | indent
+git clone -q $REPO $EMSDK_DIR
+
+echo "Downloading latest SDK" | indent
+$EMSDK_DIR/emsdk install latest
+$EMSDK_DIR/emsdk activate latest
+
+echo "Exporting EMSCRIPTEN variable" | indent
+$EMSDK_DIR/emsdk construct_env
+cat emsdk_set_env.sh > $BP_DIR/export
+
+echo "Install ninja build system"
+wget https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip
+unzip ninja-linux.zip
+mv ninja $EMSDK_DIR
