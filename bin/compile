@@ -31,8 +31,3 @@ $EMSDK_DIR/emsdk activate latest
 echo "Exporting EMSCRIPTEN variable" | indent
 $EMSDK_DIR/emsdk construct_env
 cat emsdk_set_env.sh > $BP_DIR/export
-
-echo "Install ninja build system"
-wget https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-linux.zip
-unzip ninja-linux.zip
-mv ninja $EMSDK_DIR
