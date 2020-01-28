@@ -4,8 +4,23 @@
 set -u # stop on unset variables
 set -e # stop on error
 
+https://stackoverflow.com/a/3466183/560384
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
 indent() {
-  sed -u 's/^/       /'
+  if [ $machine = "Mac" ]
+  then
+    sed -l 's/^/       /'
+  else
+    sed -u 's/^/       /'
+  fi
 }
 
 BUILD_DIR=${1:-}
