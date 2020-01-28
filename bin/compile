@@ -4,45 +4,22 @@
 set -u # stop on unset variables
 set -e # stop on error
 
-# https://stackoverflow.com/a/3466183/560384
-unameOut="$(uname -s)"
-case "${unameOut}" in
-    Linux*)     machine=Linux;;
-    Darwin*)    machine=Mac;;
-    CYGWIN*)    machine=Cygwin;;
-    MINGW*)     machine=MinGw;;
-    *)          machine="UNKNOWN:${unameOut}"
-esac
-
-indent() {
-  if [[ $machine = "Mac" ]]
-  then
-    sed -l 's/^/       /'
-  else
-    sed -u 's/^/       /'
-  fi
-}
-
-BUILD_DIR="${1:-}"
 CACHE_DIR="${2:-}"
-ENV_DIR="${3:-}"
-BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
+EMSDK_DIR="$CACHE_DIR/emsdk"
+EMSDK="${EMSDK_DIR}/emsdk"
 
-EMSDK_DIR=$CACHE_DIR/emsdk
 
 REPO=https://github.com/emscripten-core/emsdk
 
 echo "-----> Installing Emscripten"
 
-echo "Clonning Emscripten from the repo $REPO" | indent
+echo "Clonning Emscripten from the repo $REPO"
 if [ ! -d "$EMSDK_DIR" ]; then
-	git clone $REPO $EMSDK_DIR
+	git clone "$REPO" "$EMSDK_DIR"
 fi
 
-echo "Downloading latest SDK" | indent
-$EMSDK_DIR/emsdk install latest
-$EMSDK_DIR/emsdk activate latest
+echo "Downloading latest SDK"
+"$EMSDK" install latest
+"$EMSDK" activate latest
 
-echo "Exporting EMSCRIPTEN variable" | indent
-$EMSDK_DIR/emsdk construct_env
-cat emsdk_set_env.sh > $BP_DIR/export
+source "$EMSDK_DIR/emsdk_env.sh"
