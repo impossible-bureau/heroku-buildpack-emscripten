@@ -21,3 +21,5 @@ fi
 echo "Downloading latest SDK"
 "$EMSDK" install latest
 "$EMSDK" activate latest
+
+source "$EMSDK_DIR/emsdk_env.sh"
