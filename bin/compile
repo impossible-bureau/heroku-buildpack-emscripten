@@ -12,14 +12,19 @@ EMSDK="${EMSDK_DIR}/emsdk"
 REPO=https://github.com/emscripten-core/emsdk
 
 echo "-----> Installing Emscripten"
+echo "CACHE_DIR = $CACHE_DIR"
+echo "EMSDK_DIR = $EMSDK_DIR"
+echo "EMSDK = $EMSDK"
 
 echo "Clonning Emscripten from the repo $REPO"
 if [ ! -d "$EMSDK_DIR" ]; then
 	git clone "$REPO" "$EMSDK_DIR"
 fi
 
-echo "Downloading latest SDK"
+echo "Install latest"
 "$EMSDK" install latest
+echo "Activate latest"
 "$EMSDK" activate latest
 
+echo "Source environment"
 source "$EMSDK_DIR/emsdk_env.sh"
