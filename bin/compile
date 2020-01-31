@@ -12,6 +12,9 @@ EMSDK="${EMSDK_DIR}/emsdk"
 REPO=https://github.com/emscripten-core/emsdk
 
 echo "-----> Installing Emscripten"
+echo "CACHE_DIR = $CACHE_DIR"
+echo "EMSDK_DIR = $EMSDK_DIR"
+echo "EMSDK = $EMSDK"
 
 echo "Clonning Emscripten from the repo $REPO"
 if [ ! -d "$EMSDK_DIR" ]; then
