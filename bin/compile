@@ -26,5 +26,7 @@ echo "Install latest"
 echo "Activate latest"
 "$EMSDK" activate latest
 
-echo "Source environment"
-. "$EMSDK_DIR/emsdk_env.sh"
+if [ $NODE_ENV = production ]; then
+	echo "Copy environment"
+	cp "$EMSDK_DIR/emsdk_env.sh" .profile.d/
+fi
