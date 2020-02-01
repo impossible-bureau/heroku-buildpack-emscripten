@@ -27,4 +27,4 @@ echo "Activate latest"
 "$EMSDK" activate latest
 
 echo "Source environment"
-source "$EMSDK_DIR/emsdk_env.sh"
+. "$EMSDK_DIR/emsdk_env.sh"
