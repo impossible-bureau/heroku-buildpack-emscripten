@@ -6,6 +6,7 @@ set -e # stop on error
 
 CACHE_DIR="${2:-}"
 EMSDK_DIR="$CACHE_DIR/emsdk"
+GLM_DIR="$CACHE_DIR/glm"
 EMSDK="${EMSDK_DIR}/emsdk"
 
 
@@ -25,3 +26,17 @@ echo "Install latest"
 "$EMSDK" install latest
 echo "Activate latest"
 "$EMSDK" activate latest
+
+
+GLMREPO=https://github.com/g-truc/glm
+GLMTAG=0.9.9.7
+
+echo "-----> Installing GLM"
+
+echo "Clonning GLM from the repo $GLMREPO"
+if [ ! -d "$GLM_DIR" ]; then
+	git clone "$GLMREPO" "$GLM_DIR"
+	cd "$GLM_DIR"
+	git checkout tags/$GLMTAG
+fi
+
