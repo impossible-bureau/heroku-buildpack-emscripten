@@ -7,6 +7,9 @@ set -e # stop on error
 CACHE_DIR="${2:-}"
 EMSDK_DIR="$CACHE_DIR/emsdk"
 GLM_DIR="$CACHE_DIR/glm"
+BGFX_BX_DIR="$CACHE_DIR/bx"
+BGFX_BIMG_DIR="$CACHE_DIR/bimg"
+BGFX_MAIN_DIR="$CACHE_DIR/bgfx"
 EMSDK="${EMSDK_DIR}/emsdk"
 
 
@@ -38,5 +41,25 @@ if [ ! -d "$GLM_DIR" ]; then
 	git clone "$GLMREPO" "$GLM_DIR"
 	cd "$GLM_DIR"
 	git checkout tags/$GLMTAG
+fi
+
+
+BGFX_BX_REPO=https://github.com/bkaradzic/bx
+BGFX_BIMG_REPO=https://github.com/bkaradzic/bimg
+BGFX_MAIN_REPO=https://github.com/bkaradzic/bgfx
+
+echo "-----> Installing BGFX"
+
+echo "Clonning BGFX dependency $BGFX_BX_REPO"
+if [ ! -d "$BGFX_BX_DIR" ]; then
+	git clone "$BGFX_BX_REPO" "$BGFX_BX_DIR"
+fi
+echo "Clonning BGFX dependency $BGFX_BIMG_REPO"
+if [ ! -d "$BGFX_BIMG_DIR" ]; then
+	git clone "$BGFX_BIMG_REPO" "$BGFX_BIMG_DIR"
+fi
+echo "Clonning BGFX main repo $BGFX_MAIN_REPO"
+if [ ! -d "$BGFX_MAIN_DIR" ]; then
+	git clone "$BGFX_MAIN_REPO" "$BGFX_MAIN_DIR"
 fi
 
